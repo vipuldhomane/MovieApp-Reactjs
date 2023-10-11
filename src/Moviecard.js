@@ -8,11 +8,13 @@ class MovieCard extends Component {
       title: "Avengers: Endgame",
       plot: `After the devastating events of Avengers: Infinity War (2018), the
       universe is in ruins. With the help of remaining allies, the
-      Avengers assemble once more in order to reverse Thanos' actions
+      Avengers assemble once more in order to reverse Thanoss's actions
       and restore balance to the universe.`,
       price: 299,
       rating: 8.9,
       stars: 0,
+      fav: false,
+      cart: false,
     };
     // binding this of addStars to the class this
     // this.addStars = this.addStars.bind(this);
@@ -44,10 +46,16 @@ class MovieCard extends Component {
     });
     // console.log(`this :`, this.state.stars);
   };
+  handleFav = () => {
+    this.setState({ fav: !this.state.fav });
+  };
+  handleCart = () => {
+    this.setState({ cart: !this.state.cart });
+  };
 
   render() {
     // Destructuring of state object
-    const { title, plot, price, rating, stars } = this.state;
+    const { title, plot, price, rating, stars, fav, cart } = this.state;
     return (
       <div className="main">
         <div className="movie-card">
@@ -58,7 +66,7 @@ class MovieCard extends Component {
             />
           </div>
           <div className="right">
-            <div className="title">{this.state.title}</div>
+            <div className="title">{title}</div>
             <div className="plot">{plot}</div>
             <div className="price">Rs {price}</div>
 
@@ -84,8 +92,28 @@ class MovieCard extends Component {
                 />
                 <span>{stars}</span>
               </div>
-              <button className="favourite-btn">Favorite</button>
-              <button className="cart-btn">Add to Cart</button>
+              {/* {fav ? (
+                <button className="favourite-btn" onClick={this.handleFav}>
+                  Favorite
+                </button>
+              ) : (
+                <button className="unfavorite-btn" onClick={this.handleFav}>
+                  Un-Favorite
+                </button>
+              )} */}
+              <button
+                className={fav ? "unfavorite-btn" : "favourite-btn"}
+                onClick={this.handleFav}
+              >
+                {fav ? "Un-favorite" : "Favorite"}
+              </button>
+              <button
+                className={cart ? "cart-remove-btn" : "cart-btn"}
+                onClick={this.handleCart}
+              >
+                {cart ? "Remove from Cart" : "Add To Cart"}
+              </button>
+              {/* <button className="cart-btn">Add to Cart</button> */}
             </div>
           </div>
         </div>
