@@ -1,24 +1,6 @@
 import { Component } from "react";
 
 class MovieCard extends Component {
-  constructor() {
-    super();
-    //we have to call the super class
-    this.state = {
-      title: "Avengers: Endgame",
-      plot: `After the devastating events of Avengers: Infinity War (2018), the
-      universe is in ruins. With the help of remaining allies, the
-      Avengers assemble once more in order to reverse Thanoss's actions
-      and restore balance to the universe.`,
-      price: 299,
-      rating: 8.9,
-      stars: 0,
-      fav: false,
-      cart: false,
-    };
-    // binding this of addStars to the class this
-    // this.addStars = this.addStars.bind(this);
-  }
   // use of arrow function can avoid the use of implicit binding of this
   addStars = () => {
     // this.state.stars += 0.5;
@@ -55,15 +37,17 @@ class MovieCard extends Component {
 
   render() {
     // Destructuring of state object
-    const { title, plot, price, rating, stars, fav, cart } = this.state;
+    // console.log(this.props.movies);
+    // const { movies: data } = this.props;
+
+    const { title, plot, price, rating, stars, fav, cart, poster } =
+      this.props.movies;
+    const { addStars, movies, decStars, handleCart, handleFav } = this.props;
     return (
       <div className="main">
         <div className="movie-card">
           <div className="left">
-            <img
-              alt="Poster"
-              src="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg"
-            />
+            <img alt="Poster" src={poster} />
           </div>
           <div className="right">
             <div className="title">{title}</div>
@@ -77,7 +61,9 @@ class MovieCard extends Component {
                   alt="decrease"
                   className="str-btn-incdec"
                   src="https://cdn-icons-png.flaticon.com/128/43/43625.png"
-                  onClick={this.decStars}
+                  onClick={() => {
+                    decStars(movies);
+                  }}
                 />
                 <img
                   className="str-btn"
@@ -88,7 +74,9 @@ class MovieCard extends Component {
                   alt="increase"
                   className="str-btn-incdec"
                   src="https://cdn-icons-png.flaticon.com/128/1828/1828925.png"
-                  onClick={this.addStars}
+                  onClick={() => {
+                    addStars(movies);
+                  }}
                 />
                 <span>{stars}</span>
               </div>
@@ -103,13 +91,17 @@ class MovieCard extends Component {
               )} */}
               <button
                 className={fav ? "unfavorite-btn" : "favourite-btn"}
-                onClick={this.handleFav}
+                onClick={() => {
+                  handleFav(movies);
+                }}
               >
                 {fav ? "Un-favorite" : "Favorite"}
               </button>
               <button
                 className={cart ? "cart-remove-btn" : "cart-btn"}
-                onClick={this.handleCart}
+                onClick={() => {
+                  handleCart(movies);
+                }}
               >
                 {cart ? "Remove from Cart" : "Add To Cart"}
               </button>
